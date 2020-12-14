@@ -7,20 +7,20 @@
     <!--===============================================================================================-->
     <link rel="icon" type="image/png" href="/images/icons/favicon.ico"/>
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/vendor/login/bootstrap/css/bootstrap.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/fonts/login/font-awesome-4.7.0/css/font-awesome.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+    <link rel="stylesheet" type="text/css" href="/fonts/login/Linearicons-Free-v1.0.0/icon-font.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="/vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="/vendor/login/animate/animate.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="/vendor/css-hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="/vendor/login/css-hamburgers/hamburgers.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="/vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="/vendor/login/select2/select2.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="/css/util.css">
-    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/css/login/util.css">
+    <link rel="stylesheet" type="text/css" href="/css/login/main.css">
     <!--===============================================================================================-->
 </head>
 <body>
@@ -96,14 +96,14 @@
 
 
 <!--===============================================================================================-->
-<script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
+<script src="/vendor/login/jquery/jquery-3.2.1.min.js"></script>
 <!--===============================================================================================-->
-<script src="/vendor/bootstrap/js/popper.js"></script>
-<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="/vendor/login/bootstrap/js/popper.js"></script>
+<script src="/vendor/login/bootstrap/js/bootstrap.min.js"></script>
 <!--===============================================================================================-->
-<script src="/vendor/select2/select2.min.js"></script>
+<script src="/vendor/login/select2/select2.min.js"></script>
 <!--===============================================================================================-->
-<script src="/js/main.js"></script>
+<script src="/js/login/main.js"></script>
 
 </body>
 </html>
