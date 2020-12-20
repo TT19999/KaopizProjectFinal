@@ -1,124 +1,91 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends("layout.layout.layout")
 
-<head>
-    <!-- Required meta tags-->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Colorlib Templates">
-    <meta name="author" content="Colorlib">
-    <meta name="keywords" content="Colorlib Templates">
+@section("CSS")
+    <link rel="stylesheet" href="/css/login.css">
+@endsection
 
-    <!-- Title Page-->
-    <title>Au Register Forms by Colorlib</title>
-
-    <!-- Icons font CSS-->
-    <link href="vendor/register/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
-    <link href="vendor/register/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
-    <!-- Font special for pages-->
-    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-    <!-- Vendor CSS-->
-    <link href="vendor/register/select2/select2.min.css" rel="stylesheet" media="all">
-    <link href="vendor/register/datepicker/daterangepicker.css" rel="stylesheet" media="all">
-
-    <!-- Main CSS-->
-    <link href="css/register/main.css" rel="stylesheet" media="all">
-</head>
-
-<body>
-<div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
-    <div class="wrapper wrapper--w680">
-        <div class="card card-4">
-            <div class="card-body">
-                <h2 class="title">Registration Form</h2>
-                <form method="POST">
-                    <div class="row row-space">
-                        <div class="col-2">
-                            <div class="input-group">
-                                <label class="label">first name</label>
-                                <input class="input--style-4" type="text" name="first_name">
-                            </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="input-group">
-                                <label class="label">last name</label>
-                                <input class="input--style-4" type="text" name="last_name">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row row-space">
-                        <div class="col-2">
-                            <div class="input-group">
-                                <label class="label">Birthday</label>
-                                <div class="input-group-icon">
-                                    <input class="input--style-4 js-datepicker" type="text" name="birthday">
-                                    <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="input-group">
-                                <label class="label">Gender</label>
-                                <div class="p-t-10">
-                                    <label class="radio-container m-r-45">Male
-                                        <input type="radio" checked="checked" name="gender">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="radio-container">Female
-                                        <input type="radio" name="gender">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row row-space">
-                        <div class="col-2">
-                            <div class="input-group">
-                                <label class="label">Email</label>
-                                <input class="input--style-4" type="email" name="email">
-                            </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="input-group">
-                                <label class="label">Phone Number</label>
-                                <input class="input--style-4" type="text" name="phone">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <label class="label">Subject</label>
-                        <div class="rs-select2 js-select-simple select--no-search">
-                            <select name="subject">
-                                <option disabled="disabled" selected="selected">Choose option</option>
-                                <option>Subject 1</option>
-                                <option>Subject 2</option>
-                                <option>Subject 3</option>
-                            </select>
-                            <div class="select-dropdown"></div>
-                        </div>
-                    </div>
-                    <div class="p-t-15">
-                        <button class="btn btn--radius-2 btn--blue" type="submit">Submit</button>
-                    </div>
-                </form>
+@section("content")
+    <div id="logreg-forms">
+        <form class="form-signin" method="POST">
+            @csrf
+            <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Register</h1>
+            <div class="social-login">
+                <button class="btn facebook-btn social-btn" type="button"><span><i class="fab fa-facebook-f"></i> Sign in with Facebook</span> </button>
+                <button class="btn google-btn social-btn" type="button"><span><i class="fab fa-google-plus-g"></i> Sign in with Google+</span> </button>
             </div>
-        </div>
+            <p style="text-align:center"> OR  </p>
+            <div class="form-group col-md-12">
+                <label for="first_name">First name</label>
+                <input type="text" class="form-control" name="first_name" id="first_name" placeholder="First Name">
+                @error("first_name")
+                <span class="text-danger" role="alert">
+                        <strong>{{$message}}</strong>
+                    </span>
+                @enderror
+            </div>
+
+            <div class="form-group col-md-12">
+                <label for="last_name">Last name</label>
+                <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Last Name">
+                @error("last_name")
+                <span class="text-danger" role="alert">
+                        <strong>{{$message}}</strong>
+                    </span>
+                @enderror
+            </div>
+
+            <div class="form-group col-md-12">
+                <label for="">Email</label>
+                <input type="email" class="form-control" name="email" id="email" placeholder="Email">
+                @error("email")
+                <span class="text-danger" role="alert">
+                        <strong>{{$message}}</strong>
+                    </span>
+                @enderror
+            </div>
+
+            <div class="form-group col-md-12">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                @error("password")
+                <span class="text-danger" role="alert">
+                        <strong>{{$message}}</strong>
+                    </span>
+                @enderror
+            </div>
+
+            <div class="form-group col-md-12">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="Confirm Password">
+                @error("password_confirmation")
+                    <span class="text-danger" role="alert">
+                        <strong>{{$message}}</strong>
+                    </span>
+                @enderror
+            </div>
+
+            <div class="form-group col-md-12">
+                <label for="subject">Subject: </label>
+                <br>
+                <select class="col-md-6" name="subject" id="subject" multiple>
+                    <option value="student">student</option>
+                    <option value="develop">develop</option>
+                    <option value="tester">tester</option>
+                    <option value="manager">manager</option>
+                    <option value="other">other</option>
+                </select>
+            </div>
+
+
+
+
+            <button class="btn btn-success btn-block" type="submit"><i class="fas fa-user-plus"></i>  Sign up</button>
+            <hr>
+
+        </form>
+        <br>
     </div>
-</div>
+@endsection
 
-<!-- Jquery JS-->
-<script src="vendor/register/jquery/jquery.min.js"></script>
-<!-- Vendor JS-->
-<script src="vendor/register/select2/select2.min.js"></script>
-<script src="vendor/register/datepicker/moment.min.js"></script>
-<script src="vendor/register/datepicker/daterangepicker.js"></script>
-
-<!-- Main JS-->
-<script src="js/register/global.js"></script>
-
-</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
-
-</html>
-<!-- end document-->
+@section("footer")
+@endsection

@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
+use App\Traits\HasPermissions;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasPermissions;
+    use HasFactory, Notifiable, HasPermissions, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -41,7 +43,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function post(){
+    public function post(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
         return $this->hasMany(Post::class);
     }
+
+    public function profile(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Profile::class);
+    }
+
+    public function roles(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Role::class);
+    }
+
 }

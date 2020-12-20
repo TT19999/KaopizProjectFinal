@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\User\ProfileController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,3 +21,9 @@ Route::get('/', function () {
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::get('/register',[RegisterController::class,'index'])->name('register');
+
+Route::post('/login', [LoginController::class ,'login']);
+Route::post('/register',[RegisterController::class,'register']);
+Route::get('/logout',[LoginController::class,'logout']);
+
+Route::get('/user/profile',[ProfileController::class,'index'])->middleware('guest');
