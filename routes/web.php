@@ -18,12 +18,3 @@ use App\Http\Controllers\User\ProfileController;
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('/login', [LoginController::class, 'index'])->name('login');
-Route::get('/register',[RegisterController::class,'index'])->name('register');
-
-Route::post('/login', [LoginController::class ,'login']);
-Route::post('/register',[RegisterController::class,'register']);
-Route::get('/logout',[LoginController::class,'logout']);
-
-Route::get('/user/profile',[ProfileController::class,'index'])->middleware('guest');

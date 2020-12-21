@@ -30,7 +30,9 @@ class ProfilePolicy
      */
     public function view(User $user, Profile $profile)
     {
-        return ($profile->status == 'public');
+        return ($profile->status == 'public'
+                ||$user->id === $profile->id 
+                || $user->hasPermission("view_profile"));
     }
 
     /**
@@ -53,7 +55,7 @@ class ProfilePolicy
      */
     public function update(User $user, Profile $profile)
     {
-        //
+        return (  $user->id === $profile->user_id );
     }
 
     /**
