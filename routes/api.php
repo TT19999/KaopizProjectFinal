@@ -28,3 +28,4 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     Route::get('/user/profile',[ProfileController::class,'index']);
     Route::get('/user/profile/show',[ProfileController::class,'show']);
 });
+//abcs
