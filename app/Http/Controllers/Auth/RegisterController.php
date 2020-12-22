@@ -16,15 +16,15 @@ class RegisterController extends Controller
 {
     public function register(Request $request){
         $validator = Validator::make($request ->json()->all() ,[
-            'first_name'=>'required|alpha|bail',
-            'last_name'=>'required|alpha|bail',
+            'first_name'=>'required|string|bail',
+            'last_name'=>'required|string|bail',
             'email'=>'required|email|unique:users|bail',
             'password'=>'required|min:6|confirmed|bail',
             'subject'=>'required|bail',
         ]);
         if($validator->fails()){
             return response()->json([
-                'errors' => $validator->errors(),
+                'errors' => $validator->errors()->getMessageBag()->first(),
             ],400);
         }
         $user = User::create([
@@ -41,12 +41,9 @@ class RegisterController extends Controller
             'user_id'=>$user->id,
             'role_id'=>2,
         ]);
-        
-        $token = JWTAuth::fromUser($user);
-        
+
         return response()->json([
             "user" =>$user,
-            "token" => $token,
             "role"=> "user",
         ],201);
     }

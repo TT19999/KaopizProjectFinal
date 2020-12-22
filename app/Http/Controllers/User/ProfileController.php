@@ -17,36 +17,29 @@ class ProfileController extends Controller
         return response()->json([
             "user"=>$user->only("name","email"),
             "profile"=> $user->profile,
+            "skill"=> $user->skills,
             "action"=>"edit",
         ],200);
     }
 
 
-    public function show(Request $request){
-        $user = JWTAuth :: parseToken() ->authenticate();
-        $validator = Validator::make($request->all() ,[
-            'user_id'=>'required',
-        ]);
-        if($validator->fails()){
-            return response()->json([
-                'errors' => "người dùng không tồn tại",
-            ],400);
-        }
-        $userShow = User::find($request->user_id);
-        
+    public function show(Request $request, $id){
+        $user = JWTAuth::parseToken() ->authenticate();
+        $userShow = User::find($id);
         if($userShow != null ){
             $profile = $userShow->profile;
             if($user->can('view', $profile)){
                 return response()->json([
                     "user"=>$userShow->only("name","email"),
                     "profile"=>$profile,
+                    "skill" => $userShow->skills,
                     "action"=>"show",
                     "status"=>"public",
                 ],200);
             }
             return response()->json([
-                "status"=>"private",
-            ],200);
+                "errors"=>"Thông tin cá nhân không công khai",
+            ],500);
         }
         else {
             return response()->json([
