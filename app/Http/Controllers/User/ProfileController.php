@@ -47,4 +47,31 @@ class ProfileController extends Controller
             ],400);
         }
     }
+
+    public function update(Request $request){
+
+        // dd($request->toArray());
+        $user = JWTAuth::parseToken() ->authenticate();
+        // $user->skills()->sync(1);
+        // dd($user->skills);
+        $validator = Validator::make($request ->json()->all() ,[
+            'first_name'=>'required|string|bail',
+            'last_name'=>'required|string|bail',
+            'phone'=>'unique:profiles|numeric|bail',
+            'status' => 'required|string|bail',
+            'subject' => 'required|string|bail',
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'errors' => $validator->errors()->getMessageBag()->first(),
+            ],400);
+        }
+
+        $user->profile->update($request->all());
+        
+        return response()->json([
+            "message" => "sửa thông tin thành công",
+        ],201);
+
+    }
 }

@@ -21,5 +21,9 @@ class Profile extends Model
         'avatar',
         'cover',
         'subject',
+        'facebook',
+        'twitter',
+        'github',
+        'website',
     ];
 }
