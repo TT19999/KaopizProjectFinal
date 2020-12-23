@@ -32,7 +32,6 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     //resser password
     Route::post('/user/resetPassword', [AuthController::class,'resetPassword']);
 
-
     //profile
     Route::post('/user/profile', [ProfileController::class,'update']);
     Route::get('/user/profile',[ProfileController::class,'index']);
