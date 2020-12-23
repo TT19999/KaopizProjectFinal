@@ -30,7 +30,7 @@ class PostPolicy
      */
     public function view(User $user, Post $post)
     {
-        return true;
+        return ($post->status == "public" || $post->user_id == $user || $user->hasRole("admin"));
     }
 
     /**

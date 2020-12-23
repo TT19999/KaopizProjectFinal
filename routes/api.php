@@ -31,18 +31,22 @@ Route::group(['middleware' => 'auth.jwt'], function () {
 
     //resser password
     Route::post('/user/resetPassword', [AuthController::class,'resetPassword']);
-    Route::post('/user/profile', [ProfileController::class,'update']);
 
+
+    //profile
+    Route::post('/user/profile', [ProfileController::class,'update']);
     Route::get('/user/profile',[ProfileController::class,'index']);
+    Route::post('/user/profile/avatar', [ProfileController::class,'updateAvatar']);
     Route::get('/user/profile/show/{id}',[ProfileController::class,'show'])->where(['id' => '[0-9]+']);
 
     //post
     Route::post('/post',[PostController::class,'create']);
     Route::post('/post/edit',[PostController::class,'update']);
     Route::delete('/post/{id}',[PostController::class,'delete'])->where(['id' => '[0-9]+']);
-    Route::delete('/post/{id}/force'.[PostController::class,'forceDelete'])->where(['id' => '[0-9]+']);
+    Route::delete('/post/{id}/force',[PostController::class,'forceDelete'])->where(['id' => '[0-9]+']);
 });
 Route::get('/post/{id}',[PostController::class,'show'])->where(['id' => '[0-9]+']);
 Route::get('/post',[PostController::class,'index']);
+Route::post('/forgotEmail',[AuthController::class ,'forgotEmail']);
 //abcs
 

@@ -16,5 +16,7 @@ use App\Http\Controllers\User\ProfileController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $user = \App\Models\User::find(3);
+    $user->notify(new  \App\Notifications\NewAccountNotification($user));
+    echo "hello";
 });
