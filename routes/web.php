@@ -16,7 +16,6 @@ use App\Http\Controllers\User\ProfileController;
 */
 
 Route::get('/', function () {
-    $user = \App\Models\User::find(3);
-    $user->notify(new  \App\Notifications\NewAccountNotification($user));
-    echo "hello";
+    $quote = \Illuminate\Foundation\Inspiring::quote();
+    dd($quote);
 });

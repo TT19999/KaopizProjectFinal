@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Post\PostController;
 use App\Models\Profile;
+use App\Http\Controllers\Category\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,11 +42,15 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     //post
     Route::post('/post',[PostController::class,'create']);
     Route::post('/post/edit',[PostController::class,'update']);
+    Route::post('/post/cover/update', [PostController::class,'updateCover']);
+    Route::get('/post/user',[PostController::class,'userPost']);
     Route::delete('/post/{id}',[PostController::class,'delete'])->where(['id' => '[0-9]+']);
     Route::delete('/post/{id}/force',[PostController::class,'forceDelete'])->where(['id' => '[0-9]+']);
+
 });
 Route::get('/post/{id}',[PostController::class,'show'])->where(['id' => '[0-9]+']);
 Route::get('/post',[PostController::class,'index']);
 Route::post('/forgotEmail',[AuthController::class ,'forgotEmail']);
+Route::get('/category',[CategoryController::class,'index']);
 //abcs
 

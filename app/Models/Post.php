@@ -21,13 +21,14 @@ class Post extends Model
         'conclusion',
         'views',
     ];
-    
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function categories(){
+    public function categories(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
         return $this->belongsToMany(Category::class);
     }
 }
