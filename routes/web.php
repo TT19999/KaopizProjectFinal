@@ -16,6 +16,5 @@ use App\Http\Controllers\User\ProfileController;
 */
 
 Route::get('/', function () {
-    $quote = \Illuminate\Foundation\Inspiring::quote();
-    dd($quote);
+    echo('abc');
 });
