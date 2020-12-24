@@ -66,8 +66,7 @@ return [
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'url' => 'postgres://drjlsyukasatku:70a229f23d907e0ef75d8e91f269fff9ff52064287bd3ab45ee342dfdc13efd9@
-ec2-3-231-48-230.compute-1.amazonaws.com:5432/ddm1qfgd39smf3',
+            'url' => 'postgres://drjlsyukasatku:70a229f23d907e0ef75d8e91f269fff9ff52064287bd3ab45ee342dfdc13efd9@ec2-3-231-48-230.compute-1.amazonaws.com:5432/ddm1qfgd39smf3',
             'host' => 'ec2-3-231-48-230.compute-1.amazonaws.com',
             'port' => '5432',
             'database' => 'ddm1qfgd39smf3',
