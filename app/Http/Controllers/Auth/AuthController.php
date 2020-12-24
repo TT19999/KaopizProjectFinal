@@ -132,4 +132,8 @@ class AuthController extends Controller
             ], 400);
         }
     }
+
+    public function  adminLogin(Request $request){
+        return $this->login($request);
+    }
 }

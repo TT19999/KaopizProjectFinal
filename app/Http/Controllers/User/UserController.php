@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Profile;
 use App\Models\User;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\Console\Helper\Helper;
@@ -25,26 +26,57 @@ class UserController extends Controller
         ],403);
     }
 
-    public function show($id){
-        return ProfileController::show($id);
-    }
-
-    public function restore($id){
-
-    }
-    
-    public function delete(Request $request,$id){
-        $validator = Validator::make( $id,[
-            'id'=>'numeric|unique:users',
-        ]);
-        if($validator->fails()){
+    public function show(Request  $request){
+        $user = JWTAuth::parseToken() ->authenticate();
+        $userShow = User::with("skills")->with("profile")->find($request->id);
+        if($userShow != null ){
+            $profile = $userShow->profile;
+            if($user->can('view', $profile)){
+                return response()->json([
+                    "user"=>$userShow,
+                ],200);
+            }
             return response()->json([
-                'errors' => "Thong tin chua chinh xac",
+                "errors"=>"Thông tin cá nhân không công khai",
+            ],500);
+        }
+        else {
+            return response()->json([
+                'errors' => "người dùng không tồn tại",
             ],400);
         }
-        $user= User::find($id);
-        dd($id);
-        // $user->delete();
+    }
+
+    public function restore(Request $request){
+        $validator = Validator::make( $request->all(),[
+            'id'=>'unique:users',
+        ]);
+        if($validator->fails()){
+            $user= User::onlyTrashed()->find($request->id);
+            $user->restore();
+            return response()->json([
+                "message" => "khoi phuc nguoi dung thanh cong"
+            ],200);
+        }
+        return response()->json([
+            'errors' => "Khong co nguoi dung",
+        ],400);
+    }
+
+    public function delete(Request $request){
+        $validator = Validator::make( $request->all(),[
+            'id'=>'unique:users',
+        ]);
+        if($validator->fails()){
+            $user= User::find($request->id);
+            $user->delete();
+            return response()->json([
+                "message" => "xoa nguoi dung thanh cong"
+            ],200);
+        }
+        return response()->json([
+            'errors' => "Khong co nguoi dung",
+        ],400);
     }
 
 }

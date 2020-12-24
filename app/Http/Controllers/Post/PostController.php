@@ -19,9 +19,9 @@ class PostController extends Controller
         ],200);
     }
 
-    public function show($id){
+    public function show(Request  $request){
         $user = JWTAuth::parseToken()->authenticate();
-        $post= Post::with("user")->with("categories")->find($id);
+        $post= Post::with("user")->with("categories")->find($request->post_id);
         if($post){
             if($user->can('view', $post)){
                 return response()->json([

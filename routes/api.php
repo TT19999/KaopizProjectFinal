@@ -29,6 +29,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/login',[AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
+Route::post('/admin/login',[AuthController::class , 'adminLogin'])->middleware("auth.admin.login");
 
 Route::group(['middleware' => 'auth.jwt'], function () {
 
@@ -39,25 +40,26 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     Route::post('/user/profile', [ProfileController::class,'update']);
     Route::get('/user/profile',[ProfileController::class,'index']);
     Route::post('/user/profile/avatar', [ProfileController::class,'updateAvatar']);
-    Route::get('/user/profile/show/{id}',[ProfileController::class,'show'])->where(['id' => '[0-9]+']);
+    Route::get('/user/profile/show',[ProfileController::class,'show']);
 
     //post
     Route::post('/post',[PostController::class,'create']);
     Route::post('/post/edit',[PostController::class,'update']);
     Route::post('/post/cover/update', [PostController::class,'updateCover']);
     Route::get('/post/user',[PostController::class,'userPost']);
+    Route::get('/post/show',[PostController::class,'show']);
     Route::delete('/post/{id}',[PostController::class,'delete'])->where(['id' => '[0-9]+']);
     Route::delete('/post/{id}/force',[PostController::class,'forceDelete'])->where(['id' => '[0-9]+']);
 
     //admin
     Route::group(['middleware' => 'auth.admin'], function () {
         Route::get('/admin/user', [UserController::class, 'index']);
-        Route::get('/admin/user/{id}',[UserController::class,'show'])->where(['id' => '[0-9]+']);
-        Route::delete('admin/user/{id}',[UserController::class,'delete'])->where(['id' => '[0-9]+']);
-        
+        Route::get('/admin/user/show',[UserController::class,'show']);
+        Route::delete('admin/user/delete',[UserController::class,'delete']);
+        Route::post('/admin/user/restore',[UserController::class,'restore']);
+
     });
 });
-Route::get('/post/{id}',[PostController::class,'show'])->where(['id' => '[0-9]+']);
 Route::get('/post',[PostController::class,'index']);
 Route::post('/forgotEmail',[AuthController::class ,'forgotEmail']);
 Route::get('/category',[CategoryController::class,'index']);
