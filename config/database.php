@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Str;
 
+
 return [
 
     /*
@@ -15,7 +16,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'pgsql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -65,12 +66,13 @@ return [
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'url' => 'postgres://drjlsyukasatku:70a229f23d907e0ef75d8e91f269fff9ff52064287bd3ab45ee342dfdc13efd9@
+ec2-3-231-48-230.compute-1.amazonaws.com:5432/ddm1qfgd39smf3',
+            'host' => 'ec2-3-231-48-230.compute-1.amazonaws.com',
+            'port' => '5432',
+            'database' => 'ddm1qfgd39smf3',
+            'username' => 'drjlsyukasatku',
+            'password' => '70a229f23d907e0ef75d8e91f269fff9ff52064287bd3ab45ee342dfdc13efd9',
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
