@@ -18,7 +18,7 @@ class ProfilePolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return ($user->hasPermission("viewany_profile"));
     }
 
     /**
@@ -43,7 +43,7 @@ class ProfilePolicy
      */
     public function create(User $user)
     {
-        //
+        return false;
     }
 
     /**
@@ -67,7 +67,7 @@ class ProfilePolicy
      */
     public function delete(User $user, Profile $profile)
     {
-        //
+        return false;
     }
 
     /**
@@ -79,7 +79,7 @@ class ProfilePolicy
      */
     public function restore(User $user, Profile $profile)
     {
-        //
+        return false;
     }
 
     /**
@@ -91,6 +91,6 @@ class ProfilePolicy
      */
     public function forceDelete(User $user, Profile $profile)
     {
-        //
+        if($user->hasPermission("delete_profile"));
     }
 }

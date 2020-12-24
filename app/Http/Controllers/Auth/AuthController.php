@@ -76,9 +76,9 @@ class AuthController extends Controller
         ]);
         DB::table('role_user')->insert([
             'user_id'=>$user->id,
-            'role_id'=>2,
+            'role_id'=>1,
         ]);
-        $user->notify(new NewAccountNotification($user));
+        // $user->notify(new NewAccountNotification($user));
         return response()->json([
             "user" =>$user,
             "role"=> "user",

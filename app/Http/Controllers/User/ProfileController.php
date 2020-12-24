@@ -25,7 +25,7 @@ class ProfileController extends Controller
     }
 
 
-    public function show(Request $request, $id){
+    public static function show($id){
         $user = JWTAuth::parseToken() ->authenticate();
         $userShow = User::find($id);
         if($userShow != null ){

@@ -9,6 +9,8 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Post\PostController;
 use App\Models\Profile;
 use App\Http\Controllers\Category\CategoryController;
+use App\Http\Controllers\User\UserController;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +49,13 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     Route::delete('/post/{id}',[PostController::class,'delete'])->where(['id' => '[0-9]+']);
     Route::delete('/post/{id}/force',[PostController::class,'forceDelete'])->where(['id' => '[0-9]+']);
 
+    //admin
+    Route::group(['middleware' => 'auth.admin'], function () {
+        Route::get('/admin/user', [UserController::class, 'index']);
+        Route::get('/admin/user/{id}',[UserController::class,'show'])->where(['id' => '[0-9]+']);
+        Route::delete('admin/user/{id}',[UserController::class,'delete'])->where(['id' => '[0-9]+']);
+        
+    });
 });
 Route::get('/post/{id}',[PostController::class,'show'])->where(['id' => '[0-9]+']);
 Route::get('/post',[PostController::class,'index']);
