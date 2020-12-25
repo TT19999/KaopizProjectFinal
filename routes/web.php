@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -16,5 +17,7 @@ use App\Http\Controllers\User\ProfileController;
 */
 
 Route::get('/', function () {
+    $user = \App\Models\User::find('3');
+    $user->notify(new \App\Notifications\VerifyEmailNotifycation("abs"));
     echo('abc');
 });

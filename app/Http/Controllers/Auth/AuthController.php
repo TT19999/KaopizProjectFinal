@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Verify;
 use App\Notifications\ForgotNotification;
 use App\Notifications\NewAccountNotification;
 use App\Notifications\ResetPasswordNotification;
+use App\Notifications\VerifyEmailNotifycation;
 use http\Env\Response;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -78,7 +81,13 @@ class AuthController extends Controller
             'user_id'=>$user->id,
             'role_id'=>2,
         ]);
-        // $user->notify(new NewAccountNotification($user));
+        $token = rand(100000,999999);
+        DB::table('verify_emails')->insert([
+            "email"=>$user->email,
+            "token"=> $token,
+            "created_at"=>now(),
+        ]);
+        $user->notify(new VerifyEmailNotifycation($token));
         return response()->json([
             "user" =>$user,
             "role"=> "user",
@@ -135,5 +144,31 @@ class AuthController extends Controller
 
     public function  adminLogin(Request $request){
         return $this->login($request);
+    }
+
+    public function verifyEmail(Request $request){
+        $validator = Validator::make($request ->json()->all() ,[
+            'email'=>'required|email|bail',
+            'token'=>'required|max:255|bail',
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'errors' => $validator->errors()->getMessageBag()->first(),
+            ],400);
+        }
+        $verifyEmail=Verify::query()->where('email','=',$request->email)->first();
+        if($verifyEmail->token == $request->token){
+            DB::table('users')->where('email','=',$request->email)->update([
+                'email_verified_at'=>now(),
+            ]);
+            $verifyEmail->delete();
+            return response()->json([
+                "message" => "verify thanh cong",
+            ],200);
+
+        }
+        else return response()->json([
+            'errors' => "ma code khong chinh xac",
+        ],400);
     }
 }
