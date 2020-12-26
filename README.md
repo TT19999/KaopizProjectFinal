@@ -60,3 +60,8 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+He who is contented is rich. - Laozi
+When there is no desire, all things are at peace. - Laozi
+It is not the man who has too little, but the man who craves more, that is poor. - Seneca
+Knowing is not enough; we must apply. Being willing is not enough; we must do. - Leonardo da Vinci
+If you do not have a consistent goal in life, you can not live it in a consistent way. - Marcus Aurelius
