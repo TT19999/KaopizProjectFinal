@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Mail\VerifyEmail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -41,7 +42,7 @@ class VerifyEmailNotifycation extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)->view('emails.verify_email',['token'=>$this->token]);
-
+        // return (new VerifyEmail("abcasdfasd"))->to("tunghust99@gmail.com");
     }
 
     /**
