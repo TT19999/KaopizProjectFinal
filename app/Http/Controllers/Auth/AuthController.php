@@ -22,7 +22,6 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class AuthController extends Controller
 {
     public function login(Request $request){
-        return redirect('/signup');
         $validator = Validator::make($request ->json()->all() ,[
             'email'=>'required|email|bail',
             'password'=>'required|min:6|bail',
