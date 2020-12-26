@@ -26,4 +26,5 @@ Route::get('/', function () {
     // $user->notify(new \App\Notifications\VerifyEmailNotifycation("abs"));
     // Notification::route('mail','tunghust99@gmail.com')->notify(new VerifyEmailNotifycation("1234"));
     Mail::to("tunghust99@gmail.com")->send(new VerifyEmail("12345"));
+    echo 'a';
 });
