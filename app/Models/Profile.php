@@ -27,4 +27,8 @@ class Profile extends Model
         'website',
         'status',
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

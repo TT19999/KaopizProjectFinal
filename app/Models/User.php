@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasFollower;
 use App\Traits\HasPermissions;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,7 +13,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {
-    use HasFactory, Notifiable, HasPermissions, SoftDeletes;
+    use HasFactory, Notifiable, HasPermissions, SoftDeletes, HasFollower;
 
     /**
      * The attributes that are mass assignable.
@@ -64,10 +65,18 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         return $this->belongsToMany(Skill::class);
     }
 
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
+
 
     public function getJWTIdentifier()
     {
         return $this->getKey();
+    }
+
+    public function follower(){
+        return $this->hasMany(Follower::class);
     }
 
     /**

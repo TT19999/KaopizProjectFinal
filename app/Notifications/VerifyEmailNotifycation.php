@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\URL;
 
 class VerifyEmailNotifycation extends Notification implements ShouldQueue
 {
@@ -41,8 +42,9 @@ class VerifyEmailNotifycation extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)->view('emails.verify_email',['token'=>$this->token]);
-        // return (new VerifyEmail("abcasdfasd"))->to("tunghust99@gmail.com");
+        return (new MailMessage)->action('Verify',URL::temporarySignedRoute(
+            'verify', now()->addMinutes(30), ['id' => $notifiable->id]
+        ));
     }
 
     /**

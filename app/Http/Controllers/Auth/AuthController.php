@@ -45,11 +45,12 @@ class AuthController extends Controller
         }
         $user = JWTAuth::user();
         $role = $user->roles->first();
-
+        $avatar = $user->profile->avatar;
         return response()->json([
             "user"=>$user->only("name","id","email"),
             "role"=>$role->name,
             "token"=>$token,
+            "avatar"=>$avatar,
         ],200);
     }
 
@@ -88,6 +89,7 @@ class AuthController extends Controller
             "created_at"=>now(),
         ]);
         $user->notify(new VerifyEmailNotifycation($token));
+//        $user->sendEmailVerificationNotification();
         return response()->json([
             "user" =>$user,
             "role"=> "user",
@@ -170,5 +172,11 @@ class AuthController extends Controller
         else return response()->json([
             'errors' => "ma code khong chinh xac",
         ],400);
+    }
+
+    public function verify(Request $request){
+        $user=User::query()->find($request->input('id'));
+        $user->markEmailAsVerified();
+        return redirect('http://localhost:3000/login');
     }
 }

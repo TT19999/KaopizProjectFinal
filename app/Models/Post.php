@@ -27,8 +27,15 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function categories(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function categories()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class)->withCount('posts');
     }
+
+
+    public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Comment::class)->with("user:id,avatar,name")->orderBy("created_at","desc");
+    }
+
 }

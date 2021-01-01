@@ -14,7 +14,6 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class ProfileController extends Controller
 {
     public function index(){
-
         $user = JWTAuth :: parseToken() ->authenticate();
         return response()->json([
             "user"=>$user->only("name","email"),
@@ -85,6 +84,8 @@ class ProfileController extends Controller
                 $profile = $user->profile;
                 $profile->avatar = "https://kaopiz-final.s3-ap-southeast-1.amazonaws.com/".$path;
                 $profile->save();
+                $user->avatar="https://kaopiz-final.s3-ap-southeast-1.amazonaws.com/".$path;
+                $user->save();
                 return \response()->json([
                     'message' => 'Sua avatar thanh cong',
                     'avatar' => $profile->avatar,

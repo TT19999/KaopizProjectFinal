@@ -11,7 +11,8 @@ use App\Models\Profile;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\User\UserController;
 use App\Models\User;
-
+use \App\Http\Controllers\Comment\CommentController;
+use \App\Http\Controllers\Follow\FollowController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -28,7 +29,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('/login',[AuthController::class, 'login'])->middleware('auth.verify'); //use
-Route::post('/verify',[AuthController::class,'verifyEmail']);
+Route::get('/verify',[AuthController::class,'verify'])->name("verify")->middleware('auth.signer');;
 Route::post('/register', [AuthController::class, 'register']); //use
 Route::post('/admin/login',[AuthController::class , 'adminLogin'])->middleware("auth.admin.login");//use
 
@@ -45,12 +46,22 @@ Route::group(['middleware' => 'auth.jwt'], function () {
 
     //post
     Route::post('/post',[PostController::class,'create']);//use
-    Route::post('/post/edit',[PostController::class,'update']);//use
     Route::post('/post/cover/update', [PostController::class,'updateCover']);//use
     Route::get('/post/user',[PostController::class,'userPost']);//use
     Route::get('/post/show',[PostController::class,'show']);//use
     Route::delete('/post/{id}',[PostController::class,'delete']);
+    Route::get('/post/{id}/edit',[PostController::class,'edit']);//use
+    Route::put('/post/{id}',[PostController::class,'update']);//use
     Route::delete('/post/{id}/force',[PostController::class,'forceDelete']);
+
+    //comment
+    Route::post('/post/{id}/comment',[CommentController::class,'create']);//use
+    Route::post('/comment/edit',[CommentController::class,'update']);//use
+    Route::delete('/comment/delete',[CommentController::class,'delete']);//use
+
+    //followe
+    Route::post('/follow',[FollowController::class,'create']);
+    Route::delete('/follow',[FollowController::class,'delete']);
 
     //admin
     Route::group(['middleware' => 'auth.admin'], function () {
@@ -62,6 +73,19 @@ Route::group(['middleware' => 'auth.jwt'], function () {
 });
 Route::get('/post',[PostController::class,'index']);//use
 Route::post('/forgotEmail',[AuthController::class ,'forgotEmail']);//use
+Route::get('/post/comments',[CommentController::class,'index']);
+
 Route::get('/category',[CategoryController::class,'index']);//use
-//abcs
+
+
+
+
+
+
+
+
+//test cac thu cac thu
+
+Route::post('/test/category',[\App\Http\Controllers\TestApiControler::class, 'create']);
+
 
