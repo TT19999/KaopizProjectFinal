@@ -29,7 +29,7 @@ class Post extends Model
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class)->withCount('posts');
+        return $this->belongsToMany(Category::class)->withCount('posts','users');
     }
 
 
@@ -38,4 +38,7 @@ class Post extends Model
         return $this->hasMany(Comment::class)->with("user:id,avatar,name")->orderBy("created_at","desc");
     }
 
+    public function views(){
+        return $this->hasMany(View::class);
+    }
 }

@@ -2,24 +2,24 @@
 
 namespace App\Notifications;
 
-use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class NewAccountNotification extends Notification
+class NewFollowNotification extends Notification implements ShouldQueue
 {
     use Queueable;
-    public $user;
+
+    protected $data;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct($data)
     {
-        $this->user=$user;
+        $this->data=$data;
     }
 
     /**
@@ -30,7 +30,7 @@ class NewAccountNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['database'];
     }
 
     /**
@@ -41,7 +41,10 @@ class NewAccountNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)->view("emails.new_account",["user"=>$this->user]);
+        return (new MailMessage)
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
 
     /**
@@ -52,9 +55,18 @@ class NewAccountNotification extends Notification
      */
     public function toArray($notifiable)
     {
-        $array = "xin chao ban. Cam on b da dang ki tai khoan trong blog cua chung toi";
-        return [
-            $array
-        ];
+        $this->data['id']=$this->id;
+        $options = array(
+            'cluster' => 'ap1',
+            'encrypted' => true
+        );
+        $pusher = new \Pusher\Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options
+        );
+        $pusher->trigger('NotificationEvent', 'send-message/'.$notifiable->id, $this->data);
+        return $this->data;
     }
 }

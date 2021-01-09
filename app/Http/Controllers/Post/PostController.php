@@ -4,20 +4,32 @@ namespace App\Http\Controllers\Post;
 
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\View\ViewController;
+use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
+use App\Models\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use mysql_xdevapi\Table;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class PostController extends Controller
 {
     public function index(){
-        $post = Post::with("user")->with("categories")->get();
+        $post = Post::with("user")->with("categories")->withCount('comments')->orderByDesc('updated_at')->get();
+        $user=JWTAuth::parseToken()->authenticate();
+        $currnetUser = User::query()->withCount('post','follower','comments')->find($user->id);
+        $categories = Category::query()->withCount('posts')->whereKeyNot('7')->orderByDesc('posts_count')->limit('5')->get();
         return response()->json([
             "post" => $post,
+            "user" => $currnetUser,
+            "categories" => $categories
         ],200);
     }
 
@@ -26,7 +38,11 @@ class PostController extends Controller
         $post= Post::with("categories")->with('comments')->withCount("comments")->find($request->post_id);
         if($post){
             if($user->can('view', $post)){
-                $owner= User::query()->withCount('post')->withCount('follower')->with('profile:user_id,avatar,first_name,last_name,subject,created_at')->where('id','=',$post->user_id)->first();
+                $owner= User::query()->with('post')->withCount('post')->withCount('follower')->with('profile:user_id,avatar,first_name,last_name,subject,created_at')->where('id','=',$post->user_id)->first();
+                if(!ViewController::check($post, $user)) {
+                    $post->increment('views');
+                    ViewController::create($post, $user);
+                }
                 return response()->json([
                     "post"=>$post,
                     "owner" =>$owner,
@@ -57,6 +73,8 @@ class PostController extends Controller
         $user = JWTAuth::parseToken()->authenticate();
         $post = $user->post()->create($request->all());
         $post = CategoryController::addCategory($post, $request);
+        $job = (new \App\Jobs\sendNotification($post,$user));
+        dispatch($job);
         return response()->json([
             "post" => $post,
             "message" => "Bai viet da duoc tao thanh cong",

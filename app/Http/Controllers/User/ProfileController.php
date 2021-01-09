@@ -20,22 +20,25 @@ class ProfileController extends Controller
             "profile"=> $user->profile,
             "skill"=> $user->skills,
             "action"=>"edit",
+            "post_count" => count($user->post),
+            "follower_count" => count($user->follower)
         ],200);
     }
 
 
     public static function show(Request $request){
         $user = JWTAuth::parseToken() ->authenticate();
-        $userShow = User::find($request->user_id);
+        $userShow = User::with('post')->withCount('post','follower')->find($request->user_id);
         if($userShow != null ){
             $profile = $userShow->profile;
             if($user->can('view', $profile)){
                 return response()->json([
-                    "user"=>$userShow->only("name","email"),
+                    "user"=>$userShow,
                     "profile"=>$profile,
                     "skill" => $userShow->skills,
                     "action"=>"show",
                     "status"=>"public",
+                    "is_follower" => $user->hasFollower($userShow->id),
                 ],200);
             }
             return response()->json([

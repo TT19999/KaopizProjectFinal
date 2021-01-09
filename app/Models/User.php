@@ -47,7 +47,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 
     public function post(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Post::class)->with('categories');
     }
 
     public function profile(): \Illuminate\Database\Eloquent\Relations\HasOne
@@ -68,6 +68,15 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     public function comments(){
         return $this->hasMany(Comment::class);
     }
+
+    public function views(){
+        return $this->hasMany(View::class);
+    }
+
+    public function categories(){
+        return $this->belongsToMany(Category::class)->withCount('posts','users');
+    }
+
 
 
     public function getJWTIdentifier()

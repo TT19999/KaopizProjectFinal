@@ -83,11 +83,6 @@ class AuthController extends Controller
             'role_id'=>2,
         ]);
         $token = rand(100000,999999);
-        DB::table('verify_emails')->insert([
-            "email"=>$user->email,
-            "token"=> $token,
-            "created_at"=>now(),
-        ]);
         $user->notify(new VerifyEmailNotifycation($token));
 //        $user->sendEmailVerificationNotification();
         return response()->json([
@@ -149,29 +144,27 @@ class AuthController extends Controller
     }
 
     public function verifyEmail(Request $request){
+
         $validator = Validator::make($request ->json()->all() ,[
-            'email'=>'required|email|bail',
-            'token'=>'required|max:255|bail',
+            'email'=>'required|unique:users|email|bail',
         ]);
         if($validator->fails()){
-            return response()->json([
-                'errors' => $validator->errors()->getMessageBag()->first(),
+            $token = rand(100000,999999);
+            $user=User::query()->where('email','=',$request->email)->firstOrFail();
+            if(!$user->hasVerifiedEmail()){
+                $user->notify(new VerifyEmailNotifycation($token));
+                return \response()->json([
+                    'message' => 'email verify da duoc gui',
+                ],203);
+            }
+            return \response()->json([
+                'errors' => 'email da duoc verify',
             ],400);
         }
-        $verifyEmail=Verify::query()->where('email','=',$request->email)->first();
-        if($verifyEmail->token == $request->token){
-            DB::table('users')->where('email','=',$request->email)->update([
-                'email_verified_at'=>now(),
-            ]);
-            $verifyEmail->delete();
-            return response()->json([
-                "message" => "verify thanh cong",
-            ],200);
-
-        }
-        else return response()->json([
-            'errors' => "ma code khong chinh xac",
+        return \response()->json([
+            'errors' => 'khong ton tai email',
         ],400);
+
     }
 
     public function verify(Request $request){

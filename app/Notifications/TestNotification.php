@@ -2,24 +2,25 @@
 
 namespace App\Notifications;
 
-use App\Models\User;
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class NewAccountNotification extends Notification
+class TestNotification extends Notification
 {
     use Queueable;
-    public $user;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct()
     {
-        $this->user=$user;
+
     }
 
     /**
@@ -30,7 +31,7 @@ class NewAccountNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['database'];
     }
 
     /**
@@ -41,7 +42,9 @@ class NewAccountNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)->view("emails.new_account",["user"=>$this->user]);
+        return (new MailMessage)
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
 
     /**
@@ -52,7 +55,7 @@ class NewAccountNotification extends Notification
      */
     public function toArray($notifiable)
     {
-        $array = "xin chao ban. Cam on b da dang ki tai khoan trong blog cua chung toi";
+        $array= "mat khau cua b da duoc doi thanh cong";
         return [
             $array
         ];

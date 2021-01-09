@@ -42,9 +42,10 @@ class VerifyEmailNotifycation extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)->action('Verify',URL::temporarySignedRoute(
+        $url = URL::temporarySignedRoute(
             'verify', now()->addMinutes(30), ['id' => $notifiable->id]
-        ));
+        );
+        return (new MailMessage)->action('Verify',$url);
     }
 
     /**

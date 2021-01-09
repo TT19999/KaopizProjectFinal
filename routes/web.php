@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Category;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
@@ -9,6 +10,9 @@ use App\Mail\VerifyEmail;
 use App\Notifications\VerifyEmailNotifycation;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
+use App\Models\User;
+use Illuminate\Support\Facades\URL;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,8 +26,12 @@ use Illuminate\Support\Facades\Notification;
 */
 
 Route::get('/', function () {
-    $post=\App\Models\Post::query()->find(1);
-    $post->categories()->createMany([
+    $url = URL::temporarySignedRoute(
+        'verify', now()->addMinutes(30), ['id' => '1']
+    );
+    dd($url);
 
-    ]);
+    return response()->json([
+        'categories' => 'done',
+    ],200);
 });

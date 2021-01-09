@@ -16,7 +16,7 @@ class UserController extends Controller
     public function index(){
         $user = JWTAuth::parseToken() ->authenticate();
         if($user->can("viewAny",Profile::class)){
-            $users=User::with("profile")->withTrashed()->get();
+            $users=User::with("profile")->with('roles')->withCount('post','follower')->withTrashed()->get();
             return response()->json([
                 "users" => $users,
             ],200);
@@ -28,7 +28,7 @@ class UserController extends Controller
 
     public function show(Request  $request){
         $user = JWTAuth::parseToken() ->authenticate();
-        $userShow = User::with("skills")->with("profile")->find($request->id);
+        $userShow = User::with("skills")->with("profile")->with('categories')->with('post')->withTrashed()->find($request->id);
         if($userShow != null ){
             $profile = $userShow->profile;
             if($user->can('view', $profile)){

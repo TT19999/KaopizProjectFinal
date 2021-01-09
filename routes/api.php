@@ -13,6 +13,7 @@ use App\Http\Controllers\User\UserController;
 use App\Models\User;
 use \App\Http\Controllers\Comment\CommentController;
 use \App\Http\Controllers\Follow\FollowController;
+use \App\Http\Controllers\Notification\NotificationController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -29,9 +30,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('/login',[AuthController::class, 'login'])->middleware('auth.verify'); //use
-Route::get('/verify',[AuthController::class,'verify'])->name("verify")->middleware('auth.signer');;
+Route::get('/verify',[AuthController::class,'verify'])->name("verify")->middleware('auth.signer');
 Route::post('/register', [AuthController::class, 'register']); //use
 Route::post('/admin/login',[AuthController::class , 'adminLogin'])->middleware("auth.admin.login");//use
+Route::post('/verify/email',[AuthController::class,'verifyEmail']);
 
 Route::group(['middleware' => 'auth.jwt'], function () {
 
@@ -46,7 +48,7 @@ Route::group(['middleware' => 'auth.jwt'], function () {
 
     //post
     Route::post('/post',[PostController::class,'create']);//use
-    Route::post('/post/cover/update', [PostController::class,'updateCover']);//use
+//    Route::post('/post/cover/update', [PostController::class,'updateCover']);//use
     Route::get('/post/user',[PostController::class,'userPost']);//use
     Route::get('/post/show',[PostController::class,'show']);//use
     Route::delete('/post/{id}',[PostController::class,'delete']);
@@ -59,9 +61,11 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     Route::post('/comment/edit',[CommentController::class,'update']);//use
     Route::delete('/comment/delete',[CommentController::class,'delete']);//use
 
-    //followe
+    //follower
     Route::post('/follow',[FollowController::class,'create']);
     Route::delete('/follow',[FollowController::class,'delete']);
+    Route::post('/follow/category',[\App\Http\Controllers\Follow\FollowCategoryController::class,'create']);
+    Route::delete('/follow/category',[\App\Http\Controllers\Follow\FollowCategoryController::class,'delete']);
 
     //admin
     Route::group(['middleware' => 'auth.admin'], function () {
@@ -69,7 +73,29 @@ Route::group(['middleware' => 'auth.jwt'], function () {
         Route::get('/admin/user/show',[UserController::class,'show']);//use
         Route::delete('admin/user/delete',[UserController::class,'delete']);
         Route::post('/admin/user/restore',[UserController::class,'restore']);
+
+        //category
+
+        Route::post('/categories',[CategoryController::class,'create']);
+        Route::post('/categories/update',[CategoryController::class,'edit']);
+        Route::delete('/categories/delete',[CategoryController::class,'delete']);
     });
+
+    //category
+    Route::get('/category/{id}', [CategoryController::class,'show']);
+    Route::get('/categories',[CategoryController::class,'getCategory']);
+
+    //image
+    Route::post('/image/create',[\App\Http\Controllers\Image\ImageController::class,'create']);
+
+    //search
+    Route::get('/search',[\App\Http\Controllers\Search\SearchController::class,'show']);
+
+    //notification
+    Route::get('/notifications',[NotificationController::class,'index']);
+    Route::post('/notifications/update',[NotificationController::class,'update']);
+    Route::post('/notifications/update/all',[NotificationController::class,'updateAll']);
+
 });
 Route::get('/post',[PostController::class,'index']);//use
 Route::post('/forgotEmail',[AuthController::class ,'forgotEmail']);//use

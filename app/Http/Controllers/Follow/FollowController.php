@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Follow;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\FollowNotificationJob;
 use App\Models\Follower;
+use App\Models\User;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -22,6 +24,9 @@ class FollowController extends Controller
                     'user_id'=>$user->id,
                     'follower_id'=>$request->id,
                 ]);
+                $follower = User::query()->find($request->id);
+                $job = (new FollowNotificationJob($follower,$user));
+                dispatch($job);
                 return response()->json([
                     'message' => 'done',
                 ],201);
@@ -30,7 +35,6 @@ class FollowController extends Controller
                 'errors' => "da follow roi",
             ],400);
         }
-
             return response()->json([
             'errors' => "Khong ton tai",
         ],400);
