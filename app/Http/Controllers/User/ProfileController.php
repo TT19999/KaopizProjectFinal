@@ -24,8 +24,6 @@ class ProfileController extends Controller
             "follower_count" => count($user->follower)
         ],200);
     }
-
-
     public static function show(Request $request){
         $user = JWTAuth::parseToken() ->authenticate();
         $userShow = User::with('post')->withCount('post','follower')->find($request->user_id);
@@ -43,12 +41,12 @@ class ProfileController extends Controller
             }
             return response()->json([
                 "errors"=>"Thông tin cá nhân không công khai",
-            ],500);
+            ],403);
         }
         else {
             return response()->json([
                 'errors' => "người dùng không tồn tại",
-            ],400);
+            ],404);
         }
     }
 

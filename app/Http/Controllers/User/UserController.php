@@ -38,12 +38,12 @@ class UserController extends Controller
             }
             return response()->json([
                 "errors"=>"Thông tin cá nhân không công khai",
-            ],500);
+            ],403);
         }
         else {
             return response()->json([
                 'errors' => "người dùng không tồn tại",
-            ],400);
+            ],404);
         }
     }
 
@@ -60,7 +60,7 @@ class UserController extends Controller
         }
         return response()->json([
             'errors' => "Khong co nguoi dung",
-        ],400);
+        ],404);
     }
 
     public function delete(Request $request){
@@ -72,11 +72,11 @@ class UserController extends Controller
             $user->delete();
             return response()->json([
                 "message" => "xoa nguoi dung thanh cong"
-            ],200);
+            ],201);
         }
         return response()->json([
             'errors' => "Khong co nguoi dung",
-        ],400);
+        ],404);
     }
 
 }

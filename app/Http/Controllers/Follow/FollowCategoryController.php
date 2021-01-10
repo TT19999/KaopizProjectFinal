@@ -21,7 +21,7 @@ class FollowCategoryController extends Controller
             return  response()->json([
                 'message' => "da follow",
                 'id' => $request->id,
-            ],200);
+            ],201);
         }
         return response()->json([
             'errors' => "Khong ton tai",
@@ -38,10 +38,10 @@ class FollowCategoryController extends Controller
             return  response()->json([
                 'message' => "da huy follow",
                 'id' => $request->id,
-            ],200);
+            ],204);
         }
         return response()->json([
             'errors' => "Khong ton tai",
-        ],400);
+        ],404);
     }
 }

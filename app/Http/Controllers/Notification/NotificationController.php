@@ -27,15 +27,22 @@ class NotificationController extends Controller
                 $notifications->save();
                 return response()->json([
                     'message' => 'done'
-                ],200);
+                ],201);
             }
-            else return  response()->json([],403);
+            else return  response()->json([
+                'errors' => 'can do this action'
+            ],403);
         }
-        else return  response()->json([],500);
+        else return  response()->json([
+            'errors' => 'not found'
+        ],404);
     }
 
     public function updateAll(){
         $user = JWTAuth::parseToken()->authenticate();
         $user->unreadNotifications->markAsRead();
+        return response()->json([
+            'message' => 'done'
+        ],201);
     }
 }

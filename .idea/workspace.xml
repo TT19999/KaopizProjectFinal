@@ -2,12 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a12fdc89-0b01-4192-a166-c17abb17fb73" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/KaopizProjectFinal.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/KaopizProjectFinal.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/database.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Comment/CommentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Comment/CommentController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Follow/FollowCategoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Follow/FollowCategoryController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Follow/FollowController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Follow/FollowController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Notification/NotificationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Notification/NotificationController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Post/PostController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Post/PostController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Search/SearchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Search/SearchController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/ProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/ProfileController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/UserController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -211,7 +214,7 @@
       <workItem from="1610097323910" duration="18834000" />
       <workItem from="1610172017441" duration="2584000" />
       <workItem from="1610187786857" duration="170000" />
-      <workItem from="1610199849596" duration="274000" />
+      <workItem from="1610199849596" duration="3833000" />
     </task>
     <servers />
   </component>

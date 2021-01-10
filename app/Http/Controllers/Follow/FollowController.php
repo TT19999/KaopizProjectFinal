@@ -37,7 +37,7 @@ class FollowController extends Controller
         }
             return response()->json([
             'errors' => "Khong ton tai",
-        ],400);
+        ],404);
     }
 
     public function delete(Request $request){
@@ -50,7 +50,7 @@ class FollowController extends Controller
                 Follower::query()->where('user_id','=',$user->id)->where('follower_id','=',$request->id)->delete();
                 return response()->json([
                     'message' => 'done',
-                ],201);
+                ],204);
             }
             else return  response()->json([
                 'errors' => "ban khong follow ng nay",
@@ -59,6 +59,6 @@ class FollowController extends Controller
 
         return response()->json([
             'errors' => "Khong ton tai",
-        ],400);
+        ],404);
     }
 }

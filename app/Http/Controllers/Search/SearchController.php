@@ -12,7 +12,7 @@ class SearchController extends Controller
 {
     public function show(Request $request){
         $user = JWTAuth::parseToken() ->authenticate();
-        $post = Post::with("user")->with("categories")->where('title','like','%'.$request->key_word.'%')
+        $post = Post::with("user","categories")->where('title','like','%'.$request->key_word.'%')
                 ->orWhere('intro','like','%'.$request->key_word.'%')->orderByDesc('created_at')->get();
         return response()->json([
             "post" => $post,

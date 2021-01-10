@@ -22,7 +22,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class PostController extends Controller
 {
     public function index(){
-        $post = Post::with("user")->with("categories")->withCount('comments')->orderByDesc('updated_at')->get();
+        $post = Post::with("user","categories")->withCount('comments')->orderByDesc('updated_at')->get();
         $user=JWTAuth::parseToken()->authenticate();
         $currnetUser = User::query()->withCount('post','follower','comments')->find($user->id);
         $categories = Category::query()->withCount('posts')->whereKeyNot('7')->orderByDesc('posts_count')->limit('5')->get();
@@ -35,10 +35,10 @@ class PostController extends Controller
 
     public function show(Request  $request){
         $user = JWTAuth::parseToken()->authenticate();
-        $post= Post::with("categories")->with('comments')->withCount("comments")->find($request->post_id);
+        $post= Post::with("categories","comments")->withCount("comments")->find($request->post_id);
         if($post){
             if($user->can('view', $post)){
-                $owner= User::query()->with('post')->withCount('post')->withCount('follower')->with('profile:user_id,avatar,first_name,last_name,subject,created_at')->where('id','=',$post->user_id)->first();
+                $owner= User::query()->with('post','profile:user_id,avatar,first_name,last_name,subject,created_at')->withCount('post','follower')->where('id','=',$post->user_id)->first();
                 if(!ViewController::check($post, $user)) {
                     $post->increment('views');
                     ViewController::create($post, $user);
@@ -51,11 +51,11 @@ class PostController extends Controller
             }
             else response()->json([
                 "errors"=>"bai viet không công khai",
-            ],500);
+            ],403);
         }
         else return response()->json([
             "errors" => "Bài viết không tồn tai"
-        ],400);
+        ],404);
     }
 
     public function create(Request $request){
@@ -117,11 +117,11 @@ class PostController extends Controller
             }
             else return response()->json([
                 "errors"=>"bai viet không công khai",
-            ],500);
+            ],403);
         }
         else return response()->json([
             "errors" => "Bài viết không tồn tai"
-        ],400);
+        ],404);
     }
 
     public function delete($id){
@@ -136,11 +136,11 @@ class PostController extends Controller
             }
             else return response()->json([
                 "errors"=>"ban khong the xoa bai viet",
-            ],500);
+            ],403);
         }
         else return response()->json([
             "errors" => "Bài viết không tồn tai"
-        ],400);
+        ],404);
     }
 
 
